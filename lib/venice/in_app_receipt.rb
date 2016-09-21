@@ -47,15 +47,12 @@ module Venice
       @quantity = Integer(attributes['quantity']) if attributes['quantity']
       @product_id = attributes['product_id']
       @transaction_id = attributes['transaction_id']
-      @purchased_at = DateTime.parse(attributes['purchase_date']) if attributes['purchase_date']
       @app_item_id = attributes['app_item_id']
       @version_external_identifier = attributes['version_external_identifier']
 
-      # expires_date is in ms since the Epoch, Time.at expects seconds
-      @expires_at = Time.at(attributes['expires_date_ms'].to_i / 1000) if attributes['expires_date_ms']
-
-      # cancellation_date is in ms since the Epoch, Time.at expects seconds
-      @cancellation_date = Time.at(attributes['cancellation_date'].to_i / 1000) if attributes['cancellation_date']
+      @purchased_at = DateTime.parse(attributes['purchase_date']) if attributes['purchase_date']
+      @expires_at = DateTime.parse(attributes['expires_date']) if attributes['expires_date']
+      @cancellation_at = DateTime.parse(attributes['cancellation_date']) if attributes['cancellation_date']
 
       if attributes['original_transaction_id'] || attributes['original_purchase_date']
         original_attributes = {
